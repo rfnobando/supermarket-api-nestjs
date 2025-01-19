@@ -4,15 +4,15 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('products')
 @ObjectType()
 export class Product {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id', type: 'integer' })
   @Field(() => Int)
   id: number;
 
-  @Column({ type: 'text' })
+  @Column({ name: 'name', type: 'text' })
   @Field(() => String)
   name: string;
 
-  @Column({ type: 'real' })
+  @Column({ name: 'price', type: 'real' })
   @Field(() => Float)
   price: number;
 }
