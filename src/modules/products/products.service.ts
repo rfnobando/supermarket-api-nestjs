@@ -9,7 +9,7 @@ import { UpdateProductInput } from './dto/update-product.input';
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>,
+    private productRepository: Repository<Product>
   ) { }
 
   create(createProductInput: CreateProductInput) {
