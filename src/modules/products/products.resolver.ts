@@ -9,27 +9,27 @@ export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) { }
 
   @Mutation(() => Product)
-  createProduct(@Args('createProductInput') createProductInput: CreateProductInput) {
+  createProduct(@Args('createProductInput') createProductInput: CreateProductInput):Promise<Product> {
     return this.productsService.create(createProductInput);
   }
 
-  @Query(() => [Product], { name: 'products' })
+  @Query(() => [Product], { name: 'allProducts' })
   findAll() {
     return this.productsService.findAll();
   }
 
-  @Query(() => Product, { name: 'product' })
+  @Query(() => Product, { name: 'oneProduct' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.productsService.findOne(id);
   }
 
   @Mutation(() => Product)
-  updateProduct(@Args('updateProductInput') updateProductInput: UpdateProductInput) {
+  async updateProduct(@Args('updateProductInput') updateProductInput: UpdateProductInput):Promise<Product> {
     return this.productsService.update(updateProductInput.id, updateProductInput);
   }
 
-  @Mutation(() => Product)
-  removeProduct(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => String)
+  async removeProduct(@Args('id', { type: () => Int }) id: number):Promise<string> {
     return this.productsService.remove(id);
   }
 }

@@ -12,8 +12,9 @@ export class ProductsService {
     private productRepository: Repository<Product>
   ) { }
 
-  create(createProductInput: CreateProductInput) {
-    return 'This action adds a new product';
+  async create(createProductInput: CreateProductInput): Promise<Product> {
+    const newProduct = this.productRepository.create(createProductInput)
+    return this.productRepository.save(newProduct);
   }
 
   findAll() {
@@ -21,14 +22,26 @@ export class ProductsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} product`;
+    return this.productRepository.findOne({
+      where:{id},// busca por el id
+    })
   }
 
-  update(id: number, updateProductInput: UpdateProductInput) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductInput: UpdateProductInput): Promise<Product> {
+    const product = await this.productRepository.findOneBy({id});
+    if(!product){
+      throw new Error(`Product with ID ${id} not found`);
+    }
+
+    const updateProduct = {...product,...updateProductInput}
+    return this.productRepository.save(updateProduct);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number): Promise<string> {
+    const result = await this.productRepository.delete(id);
+    if(result.affected === 0){
+      throw new Error(`Product with ID #${id} not found`);
+    }
+    return `Product whith iD #${id} has been removed`;
   }
 }
