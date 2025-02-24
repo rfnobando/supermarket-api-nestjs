@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ProductsModule } from './modules/products/products.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { CartsModule } from './modules/carts/carts.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { DatabaseModule } from './modules/database/database.module';
     }),
     DatabaseModule,
     ProductsModule,
+    CartsModule,
   ],
   providers: [],
 })
